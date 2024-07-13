@@ -1,0 +1,20 @@
+{
+    "paises": [
+        {
+            "id": 1,
+            "nome": "Argentina"
+        },
+        {
+            "id": 2,
+            "nome": "Brasil"
+        },
+        {
+            "id": 3,
+            "nome": "Chile"
+        },
+        {
+            "id": 4,
+            "nome": "Uruguay"
+        }
+    ]
+}

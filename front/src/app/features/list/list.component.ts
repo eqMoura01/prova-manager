@@ -1,12 +1,23 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
+import { ListLineComponent } from '../../components/list-line/list-line.component';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [],
+  imports: [ListLineComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
 
+  paises: any[] = [];
+
+  httpClient = inject(HttpClient);
+
+  ngOnInit() {
+    this.httpClient.get<any>('http://localhost:3000/paises').subscribe((paises) => {
+      this.paises = paises;
+    });
+  }
 }
