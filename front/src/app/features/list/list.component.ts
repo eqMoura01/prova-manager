@@ -16,7 +16,7 @@ export class ListComponent {
   httpClient = inject(HttpClient);
 
   ngOnInit() {
-    this.httpClient.get<any>('http://localhost:3000/paises').subscribe((paises) => {
+    this.httpClient.get<any>('/api/paises').subscribe((paises) => {
       this.paises = paises;
     });
   }
