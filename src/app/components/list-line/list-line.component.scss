@@ -1,0 +1,12 @@
+.list-line-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 28px;
+    border-bottom: 1px solid #ccc;
+}
+
+.options{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
