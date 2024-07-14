@@ -20,3 +20,11 @@
         color: rgb(75, 75, 252);
     }
 }
+
+a{
+    text-decoration: none;
+    color: black;
+    &:hover{
+        color: rgb(75, 75, 252);
+    }
+}
