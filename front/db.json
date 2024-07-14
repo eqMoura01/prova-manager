@@ -2,19 +2,21 @@
     "paises": [
         {
             "id": 1,
-            "nome": "Argentina"
+            "nome": "Brasil",
+            "sigla": "BR",
+            "gentilico": "Brasileiro"
         },
         {
             "id": 2,
-            "nome": "Brasil"
+            "nome": "Argentina",
+            "sigla": "AR",
+            "gentilico": "Argentino"
         },
         {
             "id": 3,
-            "nome": "Chile"
-        },
-        {
-            "id": 4,
-            "nome": "Uruguay"
+            "nome": "Alemanha",
+            "sigla": "AL",
+            "gentilico": "Alemão"
         }
     ]
 }
