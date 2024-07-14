@@ -1,0 +1,25 @@
+.btn-excluir{
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    &:hover{
+        background-color: darkred;
+    }
+}
+
+.btn-editar{
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    &:hover{
+        background-color: darkblue;
+    }
+}
