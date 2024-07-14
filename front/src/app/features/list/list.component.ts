@@ -4,13 +4,14 @@ import { MatTableModule } from '@angular/material/table';
 import { Router, RouterLink } from '@angular/router';
 import { Pais } from '../../interfaces/pais.interface';
 import { PaisesService } from '../../services/paises.service';
+import { AppHeaderComponent } from "../../components/app-header/app-header.component";
 
 @Component({
   selector: 'app-list',
   standalone: true,
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
-  imports: [MatTableModule, RouterLink]
+  imports: [MatTableModule, RouterLink, AppHeaderComponent, AppHeaderComponent]
 })
 export class ListComponent {
   displayedColumns: string[] = ['Sigla', 'País', 'Gentilico'];

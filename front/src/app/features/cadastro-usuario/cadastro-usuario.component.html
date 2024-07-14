@@ -1,0 +1,28 @@
+<div class="centralize content-container login-container">
+    <form class="example-form" #userForm="ngForm" [formGroup]="form" (ngSubmit)="handleRegister()">
+      <h1>Criar conta</h1>
+      <mat-form-field class="example-full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" required name="nome" id="nome">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="usuario" required name="usuario" id="usuario">
+      </mat-form-field>
+    
+      <mat-form-field class="example-full-width">
+        <mat-label>Senha</mat-label>
+        <input type="password" matInput formControlName="senha" name="senha" id="senha">
+      </mat-form-field>
+    
+      <div class="btn-container">
+        <button mat-raised-button type="submit" [disabled]="userForm.invalid">Registrar</button>
+        <a [routerLink]="['']">
+          <button mat-raised-button style="background-color: rgb(143, 0, 0); color: #ffffff;">
+            Já tenho uma conta
+          </button>
+        </a>
+      </div>
+    </form>
+  </div>
+  
