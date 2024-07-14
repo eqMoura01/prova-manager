@@ -16,4 +16,8 @@ export class PaisesService {
   save(payload: PaisPayload) {
     return this.httpClient.post<Pais>('/api/paises', payload);
   }
+
+  deleteById(id: number) {
+    return this.httpClient.delete<void>(`/api/paises/${id}`);
+  }
 }
