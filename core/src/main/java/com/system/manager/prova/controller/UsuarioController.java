@@ -30,14 +30,14 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;  // Injeta o BCryptPasswordEncoder
+    private BCryptPasswordEncoder passwordEncoder;  
 
     private Key key;
 
     public UsuarioController(UsuarioService usuarioService, BCryptPasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
-        this.passwordEncoder = passwordEncoder;  // Injeta o BCryptPasswordEncoder no construtor
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Gerar uma chave segura
+        this.passwordEncoder = passwordEncoder;  
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256); 
     }
 
     public void save(Usuario usuario){

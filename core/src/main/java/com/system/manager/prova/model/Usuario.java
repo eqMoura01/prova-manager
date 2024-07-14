@@ -28,8 +28,4 @@ public class Usuario {
     private String senha;
     private String nome;
     private Boolean administrador;
-
-    public void setSenha(String senha) {
-        this.senha = BCrypt.hashpw(senha, BCrypt.gensalt());
-    }
 }
