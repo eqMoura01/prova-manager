@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { Pais } from '../../interfaces/pais.interface';
 import { PaisesService } from '../../services/paises.service';
 import {MatTableModule} from '@angular/material/table';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list',
   standalone: true,
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
-  imports: [MatTableModule]
+  imports: [MatTableModule, RouterLink]
 })
 export class ListComponent {
   displayedColumns: string[] = ['Sigla', 'País',  'Gentilico'];
@@ -18,5 +19,13 @@ export class ListComponent {
 
   ngOnInit() {
     this.paisesService.listAll().subscribe(paises => (this.dataSource = paises));
+  }
+
+  handleUpdate(id: number) {
+    console.log(`Editar Id ${id}`);
+  }
+
+  handleDelete(id: number) {
+    console.log(`Excluir Id ${id}`);
   }
 }
