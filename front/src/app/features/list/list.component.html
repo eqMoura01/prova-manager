@@ -18,7 +18,7 @@
     <ng-container matColumnDef="Acoes">
         <th mat-header-cell *matHeaderCellDef> Ações </th>
         <td mat-cell *matCellDef="let pais">
-            <button class="btn-editar" (click)="handleUpdate(pais.id)">Editar</button>
+            <button class="btn-editar" (click)="handleUpdate(pais)">Editar</button>
             <button class="btn-excluir" (click)="handleDelete(pais.id)">Excluir</button>
         </td>
     </ng-container>
