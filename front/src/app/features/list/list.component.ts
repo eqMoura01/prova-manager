@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
+import { MatTableModule } from '@angular/material/table';
+import { RouterLink } from '@angular/router';
 import { Pais } from '../../interfaces/pais.interface';
 import { PaisesService } from '../../services/paises.service';
-import {MatTableModule} from '@angular/material/table';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -12,13 +12,15 @@ import { RouterLink } from '@angular/router';
   imports: [MatTableModule, RouterLink]
 })
 export class ListComponent {
-  displayedColumns: string[] = ['Sigla', 'País',  'Gentilico'];
+  displayedColumns: string[] = ['Sigla', 'País', 'Gentilico'];
   dataSource: Pais[] = [];
 
   constructor(private paisesService: PaisesService) { }
 
   ngOnInit() {
-    this.paisesService.listAll().subscribe(paises => (this.dataSource = paises));
+    this.paisesService.listAll().subscribe(paises => (
+      this.dataSource = paises
+    ));
   }
 
   handleUpdate(id: number) {
