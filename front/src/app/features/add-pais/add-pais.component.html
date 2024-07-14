@@ -1,1 +1,26 @@
-<p>add-pais works!</p>
+<p>Adicionar país</p>
+<form class="example-form" #paisForm="ngForm" [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <mat-form-field class="example-full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="Ex. Brasil" formControlName="nome" required name="nome" id="nome">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Sigla</mat-label>
+    <input matInput placeholder="Ex. BR" formControlName="sigla" name="sigla" id="sigla">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Gentilico</mat-label>
+    <input matInput placeholder="Ex. Brasileiro" formControlName="gentilico" required name="gentilico" id="gentilico">
+  </mat-form-field>
+
+  <div class="btn-container">
+    <button mat-raised-button type="submit" [disabled]="paisForm.invalid">Salvar</button>
+    <a [routerLink]="['']">
+      <button mat-raised-button style="background-color: rgb(143, 0, 0); color: #ffffff;">
+        Cancelar
+      </button>
+    </a>
+  </div>
+</form>
