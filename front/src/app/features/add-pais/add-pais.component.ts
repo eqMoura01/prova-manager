@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { PaisesService } from '../../services/paises.service';
 
 @Component({
   selector: 'add-pais',
@@ -28,9 +29,19 @@ export class AddPaisComponent {
       nonNullable: true,
       validators: Validators.required,
     }),
-  }); 
+  });
+
+  constructor(private paisesService: PaisesService, private router: Router) { }
 
   handleSubmit() {
-    console.log(this.form.value);
+    this.paisesService.save({
+      nome: this.form.value.nome ?? '',
+      sigla: this.form.value.sigla ?? '',
+      gentilico: this.form.value.gentilico ?? '',
+    }).subscribe(() => {
+      this.form.reset();
+      alert('País cadastrado com sucesso!');
+      this.router.navigate(['/']);
+    });
   }
 }
