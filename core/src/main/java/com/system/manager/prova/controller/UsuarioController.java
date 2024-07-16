@@ -55,8 +55,11 @@ public class UsuarioController {
 
     @PostMapping("/autenticar")
     public ResponseEntity<UsuarioAutenticado> autenticarUsuario(@RequestBody Usuario usuarioParaAutenticar) {
-        Usuario usuarioEncontrado = usuarioService.findByLogin(usuarioParaAutenticar.getLogin());
         System.out.println(usuarioParaAutenticar.getSenha());
+        System.out.println(usuarioParaAutenticar.getLogin());
+
+        Usuario usuarioEncontrado = usuarioService.findByLogin(usuarioParaAutenticar.getLogin());
+        
 
         if (usuarioEncontrado != null && passwordEncoder.matches(usuarioParaAutenticar.getSenha(),
                 usuarioEncontrado.getSenha())) {
@@ -70,7 +73,7 @@ public class UsuarioController {
             sessaoService.save(sessao);
 
             return ResponseEntity.ok(new UsuarioAutenticado(usuarioEncontrado.getId(), usuarioEncontrado.getLogin(),
-                    usuarioEncontrado.getNome(), token, usuarioEncontrado.getAdministrador(), false));
+                    usuarioEncontrado.getNome(), token, usuarioEncontrado.getAdministrador(), true));
 
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
