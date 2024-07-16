@@ -11,10 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.system.manager.prova.dto.TokenDTO;
 import com.system.manager.prova.model.Token;
 import com.system.manager.prova.model.Usuario;
 import com.system.manager.prova.model.UsuarioAutenticado;
@@ -91,9 +91,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/renovar-ticket")
-    public ResponseEntity<Boolean> renovarTicket(@RequestBody TokenDTO tokenDTO) {
+    public ResponseEntity<Boolean> renovarTicket(@RequestHeader("Authorization") String tokenStr) {
+
+        System.out.println(tokenStr);
+        System.out.println(tokenStr.substring(7));
         try {
-            Token token = TokenService.findByToken(tokenDTO.getToken());
+            Token token = TokenService.findByToken(tokenStr.substring(7));
 
             if (token != null && token.getDtExpiracao().after(new Date())) {
 
