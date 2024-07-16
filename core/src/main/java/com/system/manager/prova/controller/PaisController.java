@@ -1,5 +1,7 @@
 package com.system.manager.prova.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class PaisController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<?> listar() {
+    public ResponseEntity<List<Pais>> listar() {
         return ResponseEntity.status(HttpStatus.OK).body(this.paisService.findAll());
     }
 
