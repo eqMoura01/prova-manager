@@ -12,24 +12,22 @@ import com.system.manager.prova.model.Usuario;
 @SpringBootApplication
 public class ProvaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProvaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ProvaApplication.class, args);
+    }
 
-	@Bean
+    @Bean
     public CommandLineRunner commandLineRunner(UsuarioController usuarioController) {
         return args -> {
-            // Usuário convidado
             Usuario usuarioConvidado = new Usuario(null, "convidado", "manager", "Usuário convidado", false);
             usuarioController.save(usuarioConvidado);
 
-            // Administrador
             Usuario admin = new Usuario(null, "admin", "suporte", "Gestor", true);
             usuarioController.save(admin);
         };
     }
 
-	@Bean
+    @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }

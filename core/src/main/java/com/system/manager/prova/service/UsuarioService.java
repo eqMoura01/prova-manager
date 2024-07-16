@@ -27,8 +27,9 @@ public class UsuarioService {
         return usuarioRepository.findByLogin(login);
     }
 
-    public Usuario findById(Long id){
-        return usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário com id: " + id + ", não foi encontrado"));
+    public Usuario findById(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário com id: " + id + ", não foi encontrado"));
     }
 
 }
