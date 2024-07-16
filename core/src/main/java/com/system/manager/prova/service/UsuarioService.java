@@ -14,8 +14,8 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public void save(Usuario usuario) {
-        usuarioRepository.save(usuario);
+    public Usuario save(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 
     public Usuario findByLogin(String login) {

@@ -1,6 +1,7 @@
 package com.system.manager.prova.controller;
 
 import java.security.Key;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.system.manager.prova.dto.TokenDTO;
-import com.system.manager.prova.model.Sessao;
+import com.system.manager.prova.model.Token;
 import com.system.manager.prova.model.Usuario;
 import com.system.manager.prova.model.UsuarioAutenticado;
-import com.system.manager.prova.service.SessaoService;
+import com.system.manager.prova.service.TokenService;
 import com.system.manager.prova.service.UsuarioService;
 
 import io.jsonwebtoken.Jwts;
@@ -36,7 +37,7 @@ public class UsuarioController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private SessaoService sessaoService;
+    private TokenService TokenService;
 
     private Key key;
 
@@ -48,9 +49,9 @@ public class UsuarioController {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
-    public void save(Usuario usuario) {
+    public ResponseEntity<Usuario> save(Usuario usuario) {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuarioService.save(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.usuarioService.save(usuario));
     }
 
     @PostMapping("/autenticar")
@@ -59,7 +60,6 @@ public class UsuarioController {
         System.out.println(usuarioParaAutenticar.getLogin());
 
         Usuario usuarioEncontrado = usuarioService.findByLogin(usuarioParaAutenticar.getLogin());
-        
 
         if (usuarioEncontrado != null && passwordEncoder.matches(usuarioParaAutenticar.getSenha(),
                 usuarioEncontrado.getSenha())) {
@@ -67,10 +67,10 @@ public class UsuarioController {
             String token = gerarToken(usuarioEncontrado.getId(), usuarioEncontrado.getLogin(),
                     usuarioEncontrado.getAdministrador());
 
-            Sessao sessao = new Sessao(null, usuarioEncontrado, token,
-                    new Date(System.currentTimeMillis() + EXPIRATION_TIME));
+            Token Token = new Token(null, usuarioEncontrado, token,
+                    new Timestamp(System.currentTimeMillis() + EXPIRATION_TIME));
 
-            sessaoService.save(sessao);
+            TokenService.save(Token);
 
             return ResponseEntity.ok(new UsuarioAutenticado(usuarioEncontrado.getId(), usuarioEncontrado.getLogin(),
                     usuarioEncontrado.getNome(), token, usuarioEncontrado.getAdministrador(), true));
@@ -93,12 +93,12 @@ public class UsuarioController {
     @GetMapping("/renovar-ticket")
     public ResponseEntity<Boolean> renovarTicket(@RequestBody TokenDTO tokenDTO) {
         try {
-            Sessao sessao = sessaoService.findByToken(tokenDTO.getToken());
+            Token token = TokenService.findByToken(tokenDTO.getToken());
 
-            if (sessao != null && sessao.getDtExpiracao().after(new Date())) {
+            if (token != null && token.getDtExpiracao().after(new Date())) {
 
-                sessao.setDtExpiracao(new Date(System.currentTimeMillis() + EXPIRATION_TIME));
-                sessaoService.save(sessao);
+                token.setDtExpiracao(new Timestamp(System.currentTimeMillis() + EXPIRATION_TIME));
+                TokenService.save(token);
                 return ResponseEntity.ok(true);
             } else {
 

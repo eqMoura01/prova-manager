@@ -3,11 +3,11 @@ package com.system.manager.prova.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.system.manager.prova.model.Sessao;
+import com.system.manager.prova.model.Token;
 
 @Repository
-public interface SessaoRepository extends JpaRepository<Sessao, Long> {
+public interface TokenRepository extends JpaRepository<Token, Long> {
 
-    Sessao findByToken(String token);
+    Token findByToken(String token);
 
 }

@@ -1,5 +1,6 @@
 package com.system.manager.prova.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sessao {
+public class Token {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +26,5 @@ public class Sessao {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
     private String token;
-    private Date dtExpiracao;
+    private Timestamp dtExpiracao;
 }
