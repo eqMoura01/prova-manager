@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,11 @@ public class PaisController {
     @GetMapping("/pesquisar")
     public ResponseEntity<?> pesquisar(@RequestBody PesquisaDTO pesquisaDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(this.paisService.findByNome(pesquisaDTO.getNome()));
+    }
+
+    @PutMapping("/atualizar")
+    public ResponseEntity<Pais> atualizar(@RequestBody Pais pais) {
+        return ResponseEntity.status(HttpStatus.OK).body(this.paisService.update(pais));
     }
 
     @DeleteMapping("/deletar/{id}")
