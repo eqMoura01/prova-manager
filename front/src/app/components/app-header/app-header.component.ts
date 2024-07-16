@@ -17,8 +17,6 @@ export class AppHeaderComponent implements OnInit {
   ngOnInit() {
     this.isAdministrador = JSON.parse(localStorage.getItem('user') ?? '').isAdministrador;
 
-    console.log('isAdministrador', this.isAdministrador);
-
     this.nomeUsuario = JSON.parse(localStorage.getItem('user') ?? '').nome;
   }
   
