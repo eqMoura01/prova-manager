@@ -1,3 +1,22 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.centralize {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.content-container {
+    width: 100%;
+    max-width: 748px;
+}
+
 form {
     display: flex;
     flex-direction: column;
