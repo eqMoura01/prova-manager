@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,6 +8,12 @@ import { RouterLink } from '@angular/router';
   templateUrl: './app-header.component.html',
   styleUrl: './app-header.component.scss'
 })
-export class AppHeaderComponent {
+export class AppHeaderComponent implements OnInit {
 
+  nomeUsuario: string = 'usuario';
+
+  ngOnInit() {
+    this.nomeUsuario = JSON.parse(localStorage.getItem('user') ?? '').nome;
+  }
+  
 }

@@ -8,11 +8,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Pais } from '../../interfaces/pais.interface';
 import { PaisesService } from '../../services/paises.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AppHeaderComponent } from '../../components/app-header/app-header.component';
 
 @Component({
   selector: 'app-edit-pais',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatButtonToggleModule, RouterLink],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatButtonToggleModule, RouterLink, AppHeaderComponent],
   templateUrl: './edit-pais.component.html',
   styleUrls: ['./edit-pais.component.scss']
 })
@@ -53,7 +54,7 @@ export class EditPaisComponent {
         gentilico: this.form.value.gentilico ?? '',
       }).subscribe(() => {
         this.form.reset();
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
 
         this.matSnackBar.open('País editado com sucesso!', 'Fechar', {
           duration: 3000,

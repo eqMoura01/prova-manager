@@ -18,7 +18,7 @@ export const routes: Routes = [
         component: ListComponent
     },
     {
-        path: 'add-pais',
+        path: 'home/add-pais',
         loadComponent:() => 
             import('./features/add-pais/add-pais.component').then(m => m.AddPaisComponent)   
     },

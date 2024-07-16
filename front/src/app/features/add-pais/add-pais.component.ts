@@ -7,11 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { PaisesService } from '../../services/paises.service';
+import { AppHeaderComponent } from '../../components/app-header/app-header.component';
 
 @Component({
   selector: 'add-pais',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatButtonToggleModule, RouterLink, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatButtonToggleModule, RouterLink, ReactiveFormsModule, MatFormFieldModule, MatInputModule, AppHeaderComponent],
   templateUrl: './add-pais.component.html',
   styleUrls: ['./add-pais.component.scss']
 })
@@ -43,7 +44,7 @@ export class AddPaisComponent {
       gentilico: this.form.value.gentilico ?? '',
     }).subscribe(() => {
       this.form.reset();
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
 
       this.matSnackBar.open('País cadastrado com sucesso!', 'Fechar', {
         duration: 3000,

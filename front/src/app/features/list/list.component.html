@@ -1,31 +1,32 @@
 <app-header/>
+<div class=" content-container centralize">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-    <ng-container matColumnDef="Sigla">
-        <th mat-header-cell *matHeaderCellDef> Sigla </th>
-        <td mat-cell *matCellDef="let pais"> {{ pais.sigla }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="País">
-        <th mat-header-cell *matHeaderCellDef> País </th>
-        <td mat-cell *matCellDef="let pais"> {{ pais.nome }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Gentilico">
-        <th mat-header-cell *matHeaderCellDef> Gentilico </th>
-        <td mat-cell *matCellDef="let pais"> {{ pais.gentilico }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Acoes">
-        <th mat-header-cell *matHeaderCellDef> Ações </th>
-        <td mat-cell *matCellDef="let pais">
-            <button class="btn-editar" (click)="handleUpdate(pais)">Editar</button>
-            <button class="btn-excluir" (click)="handleDelete(pais.id)">Excluir</button>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="['Sigla', 'País', 'Gentilico', 'Acoes']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['Sigla', 'País', 'Gentilico', 'Acoes'];"></tr>
-
-</table>
+        <ng-container matColumnDef="Sigla">
+            <th mat-header-cell *matHeaderCellDef> Sigla </th>
+            <td mat-cell *matCellDef="let pais"> {{ pais.sigla }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="País">
+            <th mat-header-cell *matHeaderCellDef> País </th>
+            <td mat-cell *matCellDef="let pais"> {{ pais.nome }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Gentilico">
+            <th mat-header-cell *matHeaderCellDef> Gentilico </th>
+            <td mat-cell *matCellDef="let pais"> {{ pais.gentilico }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Acoes">
+            <th mat-header-cell *matHeaderCellDef> Ações </th>
+            <td mat-cell *matCellDef="let pais">
+                <button class="btn-editar" (click)="handleUpdate(pais)">Editar</button>
+                <button class="btn-excluir" (click)="handleDelete(pais.id)">Excluir</button>
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="['Sigla', 'País', 'Gentilico', 'Acoes']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['Sigla', 'País', 'Gentilico', 'Acoes'];"></tr>
+    
+    </table>
+</div>
