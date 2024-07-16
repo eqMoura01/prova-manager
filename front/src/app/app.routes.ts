@@ -19,7 +19,7 @@ export const routes: Routes = [
     },
     {
         path: 'edit-pais/:id',
-        resolve: { pais: PaisResolver }, // Use the resolver directly
+        resolve: { pais: PaisResolver },
         loadComponent:() => 
             import('./features/edit-pais/edit-pais.component').then(m => m.EditPaisComponent)
       }
