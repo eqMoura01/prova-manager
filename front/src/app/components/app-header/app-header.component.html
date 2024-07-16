@@ -1,7 +1,8 @@
 <div class="header-container">
     <a [routerLink]="['/home']">Países</a>
     <div class="header-buttons">
-        <a [routerLink]="['add-pais']">Adicionar país</a>
-        <span>{{nomeUsuario}}</span>
+        <a [routerLink]="['add-pais']" *ngIf="isAdministrador">Adicionar país</a>
+        <!-- abrir menu flutuante com opcao de sair ao clicar no nomeUsuario -->
+        <a [routerLink]="['']">{{nomeUsuario}}</a>
     </div>
 </div>

@@ -1,27 +1,37 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { Router, RouterLink } from '@angular/router';
 import { Pais } from '../../interfaces/pais.interface';
 import { PaisesService } from '../../services/paises.service';
 import { AppHeaderComponent } from "../../components/app-header/app-header.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list',
   standalone: true,
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
-  imports: [MatTableModule, RouterLink, AppHeaderComponent, AppHeaderComponent]
+  imports: [MatTableModule, RouterLink, AppHeaderComponent, AppHeaderComponent, CommonModule]
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
+  
+  isAdministrador: boolean = false;
+  matSnackBar = inject(MatSnackBar);
+  
   displayedColumns: string[] = ['Sigla', 'País', 'Gentilico'];
+
   dataSource: Pais[] = [];
 
   constructor(private paisesService: PaisesService, private router: Router) { }
 
-  matSnackBar = inject(MatSnackBar);
-
   ngOnInit() {
+    this.isAdministrador = JSON.parse(localStorage.getItem('user') ?? '').isAdministrador;
+
+    if (this.isAdministrador) {
+      this.displayedColumns.push('Acoes');
+    }
+
     this.paisesService.listAll().subscribe(paises => (
       this.dataSource = paises
     ));
