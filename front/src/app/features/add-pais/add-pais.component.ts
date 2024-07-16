@@ -55,57 +55,45 @@ export class AddPaisComponent {
   valid: boolean = false;
 
   handleSubmit() {
-    this.api.get('usuario/renovar-ticket', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`
-      }
-    })
+    this.api.renovarTicket()
       .then(response => {
         this.valid = response;
-        if (this.valid) {
-          this.api.post('pais/salvar', {
-            nome: this.form.value.nome ?? '',
-            sigla: this.form.value.sigla ?? '',
-            gentilico: this.form.value.gentilico ?? '',
-          }, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-          }).then(response => {
-            this.form.reset();
-            this.router.navigate(['/home']);
 
-            this.matSnackBar.open('País cadastrado com sucesso!', 'Fechar', {
-              duration: 3000,
-              horizontalPosition: 'right',
-              verticalPosition: 'bottom',
-            });
-          }).catch(err => {
-            console.error(err.data.message.includes('Unique index or primary key violation'));
-            if (err.data.message.includes('Unique index or primary key violation')) {
-              this.matSnackBar.open('Não foi possível cadastrar o país! Dados duplicados.', 'Fechar', {
-                duration: 5000,
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-              });
-            } else {
-              this.matSnackBar.open('Não foi possível cadastrar o país! Verifique sua conexão com o servidor.', 'Fechar', {
-                duration: 3000,
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-              });
-              this.router.navigate(['/home']);
-            }
-          });
-        } else {
-          this.matSnackBar.open('Sua sessão expirou! Faça login novamente.', 'Fechar', {
+        this.api.post('pais/salvar', {
+          nome: this.form.value.nome ?? '',
+          sigla: this.form.value.sigla ?? '',
+          gentilico: this.form.value.gentilico ?? '',
+        }, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwt')}`
+          }
+        }).then(response => {
+          this.form.reset();
+          this.router.navigate(['/home']);
+
+          this.matSnackBar.open('País cadastrado com sucesso!', 'Fechar', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
           });
+        }).catch(err => {
+          console.error(err.data.message.includes('Unique index or primary key violation'));
+          if (err.data.message.includes('Unique index or primary key violation')) {
+            this.matSnackBar.open('Não foi possível cadastrar o país! Dados duplicados.', 'Fechar', {
+              duration: 5000,
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
+          } else {
+            this.matSnackBar.open('Não foi possível cadastrar o país! Verifique sua conexão com o servidor.', 'Fechar', {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
+            this.router.navigate(['/home']);
+          }
+        });
 
-          this.router.navigate(['/']);
-        }
       })
       .catch(err => {
         this.valid = false;

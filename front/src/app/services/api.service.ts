@@ -47,4 +47,13 @@ export class ApiService {
       .then(this.handleResponse)
       .catch(this.handleError);
   }
+
+  public renovarTicket(): Promise<any> {
+    return this.get('usuario/renovar-ticket', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      }
+    });
+  }
+
 }

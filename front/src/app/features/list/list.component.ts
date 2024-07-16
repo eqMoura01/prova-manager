@@ -6,7 +6,6 @@ import { Router, RouterLink } from '@angular/router';
 import { AppHeaderComponent } from "../../components/app-header/app-header.component";
 import { Pais } from '../../interfaces/pais.interface';
 import { ApiService } from '../../services/api.service';
-import { PaisesService } from '../../services/paises.service';
 
 @Component({
   selector: 'app-list',
@@ -23,12 +22,15 @@ export class ListComponent implements OnInit {
 
   isAdministrador: boolean = false;
   matSnackBar = inject(MatSnackBar);
-
-  displayedColumns: string[] = ['Sigla', 'País', 'Gentilico'];
-
   dataSource: Pais[] = [];
+  displayedColumns: string[] = ['Sigla', 'País', 'Gentilico'];
+  isValid: boolean = false;
 
-  constructor(private paisesService: PaisesService, private router: Router, private api: ApiService) { 
+
+
+  constructor(
+    private router: Router,
+    private api: ApiService) {
     this.api = new ApiService('http://localhost:8080/')
   }
 
@@ -43,12 +45,12 @@ export class ListComponent implements OnInit {
       this.dataSource = response
     }).catch(err => {
       console.error(err)
-          this.matSnackBar.open('Não foi possivel listar os países! Verifique sua conexao com o servidor.', 'Fechar', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'bottom',
-        });
+      this.matSnackBar.open('Não foi possivel listar os países! Verifique sua conexao com o servidor.', 'Fechar', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
       });
+    });
   }
 
   handleUpdate(pais: Pais) {
@@ -56,14 +58,38 @@ export class ListComponent implements OnInit {
   }
 
   handleDelete(id: number) {
-    this.paisesService.deleteById(id).subscribe(() => {
-      this.dataSource = this.dataSource.filter(pais => pais.id !== id.toString());
+    this.api.renovarTicket()
+      .then((response) => {
+        this.isValid = response;
+        console.log(this.isValid)
 
-      this.matSnackBar.open('País excluído com sucesso!', 'Fechar', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom',
+
+        this.api.delete(`pais/deletar/${id}`).then(() => {
+          this.dataSource = this.dataSource.filter(pais => pais.id !== id);
+
+          this.matSnackBar.open('País excluído com sucesso!', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
+        }).catch(err => {
+          console.error(err)
+          this.matSnackBar.open('Não foi possivel excluir o país! Verifique sua conexao com o servidor.', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+          });
+        });
+      })
+      .catch(err => {
+        console.error(err)
+        this.matSnackBar.open('Não foi possivel renovar o ticket! Verifique sua conexao com o servidor.', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+        });
+
+        this.router.navigate(['/']);
       });
-    });
   }
 }

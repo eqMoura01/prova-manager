@@ -47,23 +47,23 @@ export class EditPaisComponent {
   handleSubmit() {
     const pais: Pais = this.route.snapshot.data['pais'];
 
-    if (pais) {
-      this.paisesService.update(pais.id, {
-        nome: this.form.value.nome ?? '',
-        sigla: this.form.value.sigla ?? '',
-        gentilico: this.form.value.gentilico ?? '',
-      }).subscribe(() => {
-        this.form.reset();
-        this.router.navigate(['/home']);
+    // if (pais) {
+    //   this.paisesService.update(pais.id, {
+    //     nome: this.form.value.nome ?? '',
+    //     sigla: this.form.value.sigla ?? '',
+    //     gentilico: this.form.value.gentilico ?? '',
+    //   }).subscribe(() => {
+    //     this.form.reset();
+    //     this.router.navigate(['/home']);
 
-        this.matSnackBar.open('País editado com sucesso!', 'Fechar', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'bottom',
-        });
-      });
-    } else {
-      console.error('Error: Pais data not found in route resolver');
-    }
+    //     this.matSnackBar.open('País editado com sucesso!', 'Fechar', {
+    //       duration: 3000,
+    //       horizontalPosition: 'right',
+    //       verticalPosition: 'bottom',
+    //     });
+    //   });
+    // } else {
+    //   console.error('Error: Pais data not found in route resolver');
+    // }
   }
 }
