@@ -1,3 +1,8 @@
+:host{
+    display: flex;
+    width: 100vw;
+}
+
 .header-container{
     padding: 10px 30px;
     display: flex;
@@ -8,6 +13,7 @@
     margin-bottom: 14px;
     text-align: center;
     align-items: center;
+    width: 100%;
 }
 
 .header-buttons{
