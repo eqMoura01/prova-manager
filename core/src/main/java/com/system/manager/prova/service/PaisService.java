@@ -15,6 +15,7 @@ public class PaisService {
     private PaisRepository paisRepository;
     
     public Pais save(Pais pais) {
+        pais.setSigla(pais.getSigla().toUpperCase());
         return paisRepository.save(pais);
     }
 
