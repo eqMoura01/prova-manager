@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { ListComponent } from './features/list/list.component';
 import { LoginComponent } from './features/login/login.component';
-import { PaisResolver } from './resolvers/PaisResolver';
 
 export const routes: Routes = [
     {
@@ -19,7 +18,6 @@ export const routes: Routes = [
     },
     {
         path: 'edit-pais/:id',
-        resolve: { pais: PaisResolver },
         loadComponent:() => 
             import('./features/edit-pais/edit-pais.component').then(m => m.EditPaisComponent)
       }

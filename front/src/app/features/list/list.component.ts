@@ -55,6 +55,7 @@ export class ListComponent implements OnInit {
 
   handleUpdate(pais: Pais) {
     this.router.navigate([`/edit-pais`, pais.id]);
+    localStorage.setItem('pais', JSON.stringify(pais));
   }
 
   handleDelete(id: number) {

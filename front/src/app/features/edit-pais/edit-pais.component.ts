@@ -4,28 +4,34 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Pais } from '../../interfaces/pais.interface';
-import { PaisesService } from '../../services/paises.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppHeaderComponent } from '../../components/app-header/app-header.component';
+import { Pais } from '../../interfaces/pais.interface';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-edit-pais',
   standalone: true,
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatButtonToggleModule, RouterLink, AppHeaderComponent],
   templateUrl: './edit-pais.component.html',
-  styleUrls: ['./edit-pais.component.scss']
+  styleUrls: ['./edit-pais.component.scss'],
+  providers: [
+    ApiService,
+    { provide: 'BASE_URL', useValue: 'http://localhost:8080' }
+  ]
 })
 export class EditPaisComponent {
   form: FormGroup;
 
+  pais: Pais = JSON.parse(localStorage.getItem('pais') ?? '');
+
   constructor(
-    private paisesService: PaisesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private api: ApiService
   ) {
-    const pais: Pais = this.route.snapshot.data['pais'];
+    const pais: Pais = JSON.parse(localStorage.getItem('pais') ?? '');
     this.form = new FormGroup({
       nome: new FormControl<String>(pais.nome, {
         nonNullable: true,
@@ -41,29 +47,45 @@ export class EditPaisComponent {
       }),
     });
   }
-  
+
   matSnackBar = inject(MatSnackBar);
 
   handleSubmit() {
-    const pais: Pais = this.route.snapshot.data['pais'];
+    this.pais = {
+      id: this.pais.id,
+      nome: this.form.get('nome')?.value,
+      sigla: this.form.get('sigla')?.value,
+      gentilico: this.form.get('gentilico')?.value
+    }
+    this.api.renovarTicket()
+      .then(response => {
+        this.api.put('pais/atualizar', this.pais)
+          .then(response => {
+            this.matSnackBar.open('País atualizado com sucesso!', 'Fechar', {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
+            this.router.navigate(['/home']);
+          })
+          .catch(err => {
+            console.error(err);
+            this.matSnackBar.open('Não foi possível atualizar o país! Verifique sua conexão com o servidor.', 'Fechar', {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
+          });
+      })
+      .catch(err => {
+        console.error(err);
+        this.matSnackBar.open('Não foi possivel renovar o ticket! Verifique sua conexao com o servidor.', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+        });
 
-    // if (pais) {
-    //   this.paisesService.update(pais.id, {
-    //     nome: this.form.value.nome ?? '',
-    //     sigla: this.form.value.sigla ?? '',
-    //     gentilico: this.form.value.gentilico ?? '',
-    //   }).subscribe(() => {
-    //     this.form.reset();
-    //     this.router.navigate(['/home']);
-
-    //     this.matSnackBar.open('País editado com sucesso!', 'Fechar', {
-    //       duration: 3000,
-    //       horizontalPosition: 'right',
-    //       verticalPosition: 'bottom',
-    //     });
-    //   });
-    // } else {
-    //   console.error('Error: Pais data not found in route resolver');
-    // }
+        this.router.navigate(['/']);
+      })
   }
 }
