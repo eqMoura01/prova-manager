@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterLink } from '@angular/router';
 import { AppHeaderComponent } from "../../components/app-header/app-header.component";
@@ -14,22 +15,23 @@ import { ApiService } from '../../services/api.service';
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
   imports: [MatTableModule, RouterLink, AppHeaderComponent, AppHeaderComponent, CommonModule,
-    MatPaginatorModule
+    MatPaginatorModule, MatSortModule
   ],
 })
 export class ListComponent {
 
+  displayedColumns: string[] = ['sigla', 'nome', 'gentilico'];
+
   isAdministrador: boolean = false;
+
   matSnackBar = inject(MatSnackBar);
 
-
   dataSource = new MatTableDataSource<Pais>([]);
-  displayedColumns: string[] = ['Sigla', 'País', 'Gentilico'];
+
   isValid: boolean = false;
 
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private router: Router,
@@ -38,6 +40,7 @@ export class ListComponent {
   ) { }
 
   ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.loadData();
     this.cdr.detectChanges();
@@ -71,9 +74,6 @@ export class ListComponent {
     this.api.renovarTicket()
       .then((response) => {
         this.isValid = response;
-        console.log(this.isValid)
-
-
         this.api.delete(`pais/deletar/${id}`).then(() => {
           this.dataSource.data = this.dataSource.data.filter(pais => pais.id !== id);
 
@@ -98,7 +98,6 @@ export class ListComponent {
           horizontalPosition: 'right',
           verticalPosition: 'bottom',
         });
-
         this.router.navigate(['/']);
       });
   }

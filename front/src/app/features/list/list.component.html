@@ -1,16 +1,16 @@
 <app-header></app-header>
 <div class="content-container">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="Sigla">
-            <th mat-header-cell *matHeaderCellDef> Sigla </th>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="sigla">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sigla </th>
             <td mat-cell *matCellDef="let pais"> {{ pais.sigla }} </td>
         </ng-container>
-        <ng-container matColumnDef="País">
-            <th mat-header-cell *matHeaderCellDef> País </th>
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> País </th>
             <td mat-cell *matCellDef="let pais"> {{ pais.nome }} </td>
         </ng-container>
-        <ng-container matColumnDef="Gentilico">
-            <th mat-header-cell *matHeaderCellDef> Gentilico </th>
+        <ng-container matColumnDef="gentilico">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Gentilico </th>
             <td mat-cell *matCellDef="let pais"> {{ pais.gentilico }} </td>
         </ng-container>
         <ng-container matColumnDef="Acoes" *ngIf="isAdministrador">
