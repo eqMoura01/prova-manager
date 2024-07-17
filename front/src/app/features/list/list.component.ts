@@ -73,7 +73,6 @@ export class ListComponent {
 
   handleSearch(event: any) {
     const filterValue = event.target.value;
-    console.log(filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
