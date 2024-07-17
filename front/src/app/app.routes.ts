@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { ListComponent } from './features/list/list.component';
 import { LoginComponent } from './features/login/login.component';
 import { AuthGuard } from './guard/auth.guard';
+import { AdminGuard } from './guard/admin.guard';
 
 export const routes: Routes = [
   {
@@ -17,12 +18,12 @@ export const routes: Routes = [
     path: 'home/add-pais',
     loadComponent: () =>
       import('./features/add-pais/add-pais.component').then(m => m.AddPaisComponent),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'edit-pais/:id',
     loadComponent: () =>
       import('./features/edit-pais/edit-pais.component').then(m => m.EditPaisComponent),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   }
 ];
