@@ -2,7 +2,7 @@
     <a [routerLink]="['/home']">Países</a>
     <div class="header-buttons">
         <a [routerLink]="['add-pais']" *ngIf="isAdministrador">Adicionar país</a>
-        <!-- abrir menu flutuante com opcao de sair ao clicar no nomeUsuario -->
+        <!-- TODO: abrir menu flutuante com opcao de sair ao clicar no nomeUsuario -->
         <a (click)="handleExit()">{{nomeUsuario}}</a>
     </div>
 </div>
