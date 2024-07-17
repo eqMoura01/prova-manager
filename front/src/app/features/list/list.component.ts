@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterLink } from '@angular/router';
 import { AppHeaderComponent } from "../../components/app-header/app-header.component";
 import { Pais } from '../../interfaces/pais.interface';
@@ -12,29 +13,37 @@ import { ApiService } from '../../services/api.service';
   standalone: true,
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
-  imports: [MatTableModule, RouterLink, AppHeaderComponent, AppHeaderComponent, CommonModule],
-  providers: [
-    ApiService,
-    { provide: 'BASE_URL', useValue: 'http://localhost:8080' }
-  ]
+  imports: [MatTableModule, RouterLink, AppHeaderComponent, AppHeaderComponent, CommonModule,
+    MatPaginatorModule
+  ],
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
 
   isAdministrador: boolean = false;
   matSnackBar = inject(MatSnackBar);
-  dataSource: Pais[] = [];
+
+
+  dataSource = new MatTableDataSource<Pais>([]);
   displayedColumns: string[] = ['Sigla', 'País', 'Gentilico'];
   isValid: boolean = false;
 
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
 
   constructor(
     private router: Router,
-    private api: ApiService) {
-    this.api = new ApiService('http://localhost:8080/')
+    private api: ApiService,
+    private cdr: ChangeDetectorRef
+  ) { }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.loadData();
+    this.cdr.detectChanges();
   }
 
-  ngOnInit() {
+  loadData() {
     this.isAdministrador = JSON.parse(localStorage.getItem('user') ?? '').isAdministrador;
 
     if (this.isAdministrador) {
@@ -42,10 +51,10 @@ export class ListComponent implements OnInit {
     }
 
     this.api.get('pais/listar').then(response => {
-      this.dataSource = response
+      this.dataSource.data = response;
     }).catch(err => {
-      console.error(err)
-      this.matSnackBar.open('Não foi possivel listar os países! Verifique sua conexao com o servidor.', 'Fechar', {
+      console.error(err);
+      this.matSnackBar.open('Não foi possível listar os países! Verifique sua conexão com o servidor.', 'Fechar', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
@@ -66,7 +75,7 @@ export class ListComponent implements OnInit {
 
 
         this.api.delete(`pais/deletar/${id}`).then(() => {
-          this.dataSource = this.dataSource.filter(pais => pais.id !== id);
+          this.dataSource.data = this.dataSource.data.filter(pais => pais.id !== id);
 
           this.matSnackBar.open('País excluído com sucesso!', 'Fechar', {
             duration: 3000,
