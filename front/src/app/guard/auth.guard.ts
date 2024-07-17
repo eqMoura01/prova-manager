@@ -19,10 +19,9 @@ export class AuthGuard implements CanActivate {
     if (isLoggedIn) {
       try {
         this.api.renovarTicket().then(response => {
-          console.log(response);
         }
         ).catch(error => {
-          console.log(error)
+          this.router.navigate(['/']);
         });
         return true;
       } catch {
