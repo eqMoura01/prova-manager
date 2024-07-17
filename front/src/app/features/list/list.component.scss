@@ -17,7 +17,7 @@
     max-width: 748px;
 }
 
-.btn-excluir{
+.btn-excluir {
     background-color: red;
     color: white;
     border: none;
@@ -25,12 +25,13 @@
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
-    &:hover{
+
+    &:hover {
         background-color: darkred;
     }
 }
 
-.btn-editar{
+.btn-editar {
     background-color: blue;
     color: white;
     border: none;
@@ -38,19 +39,23 @@
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
-    &:hover{
+
+    &:hover {
         background-color: darkblue;
     }
 }
 
-table{
+table {
     width: 100%;
-    margin-top: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     // z-index: 1;
 }
 
-mat-paginator{
+mat-form-field {
+    width: 100%;
+}
+
+mat-paginator {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
     // z-index: 0;
 }

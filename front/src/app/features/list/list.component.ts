@@ -8,6 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AppHeaderComponent } from "../../components/app-header/app-header.component";
 import { Pais } from '../../interfaces/pais.interface';
 import { ApiService } from '../../services/api.service';
+import { MatInput, MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-list',
@@ -15,7 +16,7 @@ import { ApiService } from '../../services/api.service';
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
   imports: [MatTableModule, RouterLink, AppHeaderComponent, AppHeaderComponent, CommonModule,
-    MatPaginatorModule, MatSortModule
+    MatPaginatorModule, MatSortModule, MatInputModule, MatInput
   ],
 })
 export class ListComponent {
@@ -68,6 +69,12 @@ export class ListComponent {
   handleUpdate(pais: Pais) {
     this.router.navigate([`/edit-pais`, pais.id]);
     localStorage.setItem('pais', JSON.stringify(pais));
+  }
+
+  handleSearch(event: any) {
+    const filterValue = event.target.value;
+    console.log(filterValue);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   handleDelete(id: number) {

@@ -1,4 +1,7 @@
 <app-header></app-header>
+<mat-form-field class="content-container">
+    <input matInput placeholder="Pesquise um pais" (input)="handleSearch($event)">
+</mat-form-field>
 <div class="content-container">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="sigla">
