@@ -67,7 +67,7 @@ public class UsuarioController {
             String token = gerarToken(usuarioEncontrado.getId(), usuarioEncontrado.getLogin(),
                     usuarioEncontrado.getAdministrador());
 
-            Token Token = new Token(null, usuarioEncontrado, token,
+            Token Token = new Token(null, token,
                     new Timestamp(System.currentTimeMillis() + EXPIRATION_TIME));
 
             TokenService.save(Token);
