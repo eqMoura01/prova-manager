@@ -43,12 +43,14 @@ public class TokenService {
                 .compact();
     }
 
-    public boolean validaToken(String token) throws SignatureException {
+    public boolean renovaToken(String token) throws SignatureException {
 
         Token tokenEncontrado = findByToken(token.substring(7));
 
         if (tokenEncontrado.getDtExpiracao().after(new Date())) {
+
             tokenEncontrado.setDtExpiracao(new Timestamp(System.currentTimeMillis() + EXPIRATION_TIME));
+            save(tokenEncontrado);
 
             return true;
         } else {

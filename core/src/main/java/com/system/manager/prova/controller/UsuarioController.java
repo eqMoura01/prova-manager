@@ -43,7 +43,7 @@ public class UsuarioController {
     @GetMapping("/renovar-ticket")
     public ResponseEntity<Boolean> renovarTicket(@RequestHeader("Authorization") String tokenStr) {
         try {
-            return ResponseEntity.ok(tokenService.validaToken(tokenStr));
+            return ResponseEntity.ok(tokenService.renovaToken(tokenStr));
         } catch (SignatureException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
