@@ -39,62 +39,26 @@ public class UsuarioController {
     @Autowired
     private TokenService TokenService;
 
-    private Key key;
+    private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     private final long EXPIRATION_TIME = 300000; // 5 Minutos
 
-    public UsuarioController(UsuarioService usuarioService, BCryptPasswordEncoder passwordEncoder) {
-        this.usuarioService = usuarioService;
-        this.passwordEncoder = passwordEncoder;
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    }
-
     public ResponseEntity<Usuario> save(Usuario usuario) {
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return ResponseEntity.status(HttpStatus.CREATED).body(this.usuarioService.save(usuario));
     }
 
     @PostMapping("/autenticar")
     public ResponseEntity<UsuarioAutenticado> autenticarUsuario(@RequestBody Usuario usuarioParaAutenticar) {
-        System.out.println(usuarioParaAutenticar.getSenha());
-        System.out.println(usuarioParaAutenticar.getLogin());
-
-        Usuario usuarioEncontrado = usuarioService.findByLogin(usuarioParaAutenticar.getLogin());
-
-        if (usuarioEncontrado != null && passwordEncoder.matches(usuarioParaAutenticar.getSenha(),
-                usuarioEncontrado.getSenha())) {
-
-            String token = gerarToken(usuarioEncontrado.getId(), usuarioEncontrado.getLogin(),
-                    usuarioEncontrado.getAdministrador());
-
-            Token Token = new Token(null, token,
-                    new Timestamp(System.currentTimeMillis() + EXPIRATION_TIME));
-
-            TokenService.save(Token);
-
-            return ResponseEntity.ok(new UsuarioAutenticado(usuarioEncontrado.getId(), usuarioEncontrado.getLogin(),
-                    usuarioEncontrado.getNome(), token, usuarioEncontrado.getAdministrador(), true));
-
-        } else {
+        try {
+            return ResponseEntity.ok(usuarioService.autenticaUsuario(usuarioParaAutenticar));
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-    }
-
-    private String gerarToken(Long id, String login, Boolean administrador) {
-        return Jwts.builder()
-                .setSubject(id.toString())
-                .claim("login", login)
-                .claim("admin", administrador)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(key)
-                .compact();
     }
 
     @GetMapping("/renovar-ticket")
     public ResponseEntity<Boolean> renovarTicket(@RequestHeader("Authorization") String tokenStr) {
 
-        System.out.println(tokenStr);
-        System.out.println(tokenStr.substring(7));
         try {
             Token token = TokenService.findByToken(tokenStr.substring(7));
 
