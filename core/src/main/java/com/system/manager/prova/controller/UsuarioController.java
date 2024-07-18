@@ -1,13 +1,11 @@
 package com.system.manager.prova.controller;
 
-import java.security.Key;
 import java.sql.Timestamp;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +19,6 @@ import com.system.manager.prova.model.UsuarioAutenticado;
 import com.system.manager.prova.service.TokenService;
 import com.system.manager.prova.service.UsuarioService;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 
 @RestController
@@ -34,12 +29,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
     private TokenService TokenService;
-
-    private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     private final long EXPIRATION_TIME = 300000; // 5 Minutos
 
