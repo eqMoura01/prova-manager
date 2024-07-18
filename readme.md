@@ -25,9 +25,14 @@ Uma aplicação web para gerenciamento e listagem de países.
 ## Maior desafio da prova para mim?
 - Lidar com um Framework que nunca utilizei anteriormente e entender como reutilizar componentes, como páginas de cadastro e edição juntas.
 
+## Requisitos
+1. JDK 21
+2. Angular CLI
+3. node/npm
+
 ## Rodando a aplicação:
 1. Clone esse repositório para sua máquina.
-2. Com um terminal aberto no diretório raiz do projeto, execute o comando 'cd front/' e após isso 'ng serve'.
+2. Com um terminal aberto no diretório raiz do projeto, execute o comando 'cd front/', 'npm install' e após isso 'ng serve'.
 3. Abra sua IDE de preferência (eu utilizei VSCode), e execute o back-end, presente no diretório 'core/'.
 4. Acesse 'http://localhost:4200' e teste a aplicação.
 5. Usuarios disponiveis: Login: admin, Senha: suporte; Login: convidado, Senha: manager. 
