@@ -1,5 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { Pais } from '../interfaces/pais.interface';
+import { PaisPayload } from '../interfaces/payload-pais.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -56,4 +60,20 @@ export class ApiService {
     });
   }
 
+  public salvarPais(pais: PaisPayload) {
+    return this.post('pais/salvar', pais, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      }
+    })
+  }
+
+  public editarPais(pais: Pais) {
+    return this.put('pais/atualizar', pais, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      }
+    })
+
+  }
 }

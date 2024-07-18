@@ -1,5 +1,5 @@
 export interface Pais {
-    id: number;
+    id: number | null;
     nome: String;
     sigla: String;
     gentilico: String;

@@ -11,19 +11,15 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    component: ListComponent,
+    loadComponent() {
+      return import('./features/list/list.component').then(m => m.ListComponent);
+    },
     canActivate: [AuthGuard]
   },
   {
     path: 'home/add-pais',
     loadComponent: () =>
       import('./features/add-pais/add-pais.component').then(m => m.AddPaisComponent),
-    canActivate: [AuthGuard, AdminGuard]
-  },
-  {
-    path: 'edit-pais/:id',
-    loadComponent: () =>
-      import('./features/edit-pais/edit-pais.component').then(m => m.EditPaisComponent),
     canActivate: [AuthGuard, AdminGuard]
   }
 ];

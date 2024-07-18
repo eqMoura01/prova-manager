@@ -44,6 +44,7 @@ export class ListComponent {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.loadData();
+    localStorage.removeItem('pais');
     this.cdr.detectChanges();
   }
 
@@ -67,8 +68,8 @@ export class ListComponent {
   }
 
   handleUpdate(pais: Pais) {
-    this.router.navigate([`/edit-pais`, pais.id]);
     localStorage.setItem('pais', JSON.stringify(pais));
+    this.router.navigate(['home/add-pais']);
   }
 
   handleSearch(event: any) {

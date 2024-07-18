@@ -1,6 +1,6 @@
 <app-header/>
 <div class="content-container">
-  <p>Adicionar país</p>
+  <p>{{pais ? 'Editar país' : 'Adicionar país'}}</p>
   <form class="example-form" #paisForm="ngForm" [formGroup]="form" (ngSubmit)="handleSubmit()">
     <mat-form-field class="example-full-width">
       <mat-label>Nome</mat-label>
