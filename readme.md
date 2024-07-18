@@ -36,3 +36,8 @@ Uma aplicação web para gerenciamento e listagem de países.
 3. Abra sua IDE de preferência (eu utilizei VSCode), e execute o back-end, presente no diretório 'core/'.
 4. Acesse 'http://localhost:4200' e teste a aplicação.
 5. Usuarios disponiveis: Login: admin, Senha: suporte; Login: convidado, Senha: manager. 
+
+## Endereços disponiveis
+- http://localhost:8080/h2 (H2 Database)
+- http://localhost:8080/swagger-ui.html (OpenAPI - SwaggerUI)
+- http://localhost:4200 (Front-end)
