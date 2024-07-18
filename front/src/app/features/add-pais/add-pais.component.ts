@@ -79,12 +79,11 @@ export class AddPaisComponent {
         this.handleSave();
       }
     }).catch(() => {
-      this.matSnackBar.open('Sua sessão expirou! Faça login novamente.', 'Fechar', {
+      this.matSnackBar.open('Não foi possivel renovar seu token. Verifique a conexão com o servidor.', 'Fechar', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
       });
-      this.router.navigate(['/']);
     });
 
 

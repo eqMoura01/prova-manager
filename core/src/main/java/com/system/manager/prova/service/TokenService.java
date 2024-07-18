@@ -47,15 +47,11 @@ public class TokenService {
 
         Token tokenEncontrado = findByToken(token.substring(7));
 
-        if (tokenEncontrado.getDtExpiracao().after(new Date())) {
+        tokenEncontrado.setDtExpiracao(new Timestamp(System.currentTimeMillis() + EXPIRATION_TIME));
+        save(tokenEncontrado);
 
-            tokenEncontrado.setDtExpiracao(new Timestamp(System.currentTimeMillis() + EXPIRATION_TIME));
-            save(tokenEncontrado);
+        return true;
 
-            return true;
-        } else {
-            throw new SignatureException("Token expirado");
-        }
     }
 
 }
