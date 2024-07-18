@@ -27,8 +27,6 @@ public class UsuarioController {
     @Autowired
     private TokenService tokenService;
 
-    private final long EXPIRATION_TIME = 300000; // 5 Minutos
-
     public ResponseEntity<Usuario> save(Usuario usuario) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.usuarioService.save(usuario));
     }
