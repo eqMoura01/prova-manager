@@ -39,7 +39,7 @@ export class AddPaisComponent {
     }),
     sigla: new FormControl<String>('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
+      validators: [Validators.required, Validators.minLength(2), Validators.maxLength(2), Validators.pattern('^[A-Za-z]{2}$')],
     }),
     gentilico: new FormControl<String>('', {
       nonNullable: true,
@@ -49,7 +49,7 @@ export class AddPaisComponent {
 
   matcher = new MyErrorStateMatcher();
 
-  constructor(private paisesService: PaisesService, private router: Router, private api: ApiService) { }
+  constructor(private router: Router, private api: ApiService) { }
 
   matSnackBar = inject(MatSnackBar);
   valid: boolean = false;

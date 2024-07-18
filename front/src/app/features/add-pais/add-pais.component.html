@@ -10,8 +10,8 @@
     <mat-form-field class="example-full-width">
       <mat-label>Sigla</mat-label>
       <input matInput placeholder="Ex. BR" formControlName="sigla" usuario="sigla" id="sigla" [errorStateMatcher]="matcher">
-      <mat-error *ngIf="form.get('sigla')?.hasError('minlength') || form.get('sigla')?.hasError('maxlength')">
-        A sigla deve ter exatamente 2 letras.
+      <mat-error *ngIf="form.get('sigla')?.hasError('minlength') || form.get('sigla')?.hasError('maxlength') || form.get('sigla')?.hasError('pattern')">
+        A sigla deve ter exatamente 2 letras, sem espaços, números ou caracteres especiais.
       </mat-error>
       <mat-error *ngIf="form.get('sigla')?.hasError('required')">
         Sigla é <strong>obrigatória</strong>.

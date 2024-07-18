@@ -39,7 +39,7 @@ export class EditPaisComponent {
       }),
       sigla: new FormControl<String>(pais.sigla, {
         nonNullable: true,
-        validators: Validators.required,
+        validators: [Validators.required, Validators.minLength(2), Validators.maxLength(2), Validators.pattern('^[A-Za-z]{2}$')],
       }),
       gentilico: new FormControl<String>(pais.gentilico, {
         nonNullable: true,
