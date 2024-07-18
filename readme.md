@@ -23,7 +23,7 @@ Uma aplicação web para gerenciamento e listagem de países.
 10. Somente um usuário administrador tem o poder de adicionar, editar e deletar um país.
 
 ## Maior desafio da prova para mim?
-- Lidar com um Framework que nunca utilizei anteriormente.
+- Lidar com um Framework que nunca utilizei anteriormente e entender como reutilizar componentes, como páginas de cadastro e edição juntas.
 
 ## Rodando a aplicação:
 1. Clone esse repositório para sua máquina.
