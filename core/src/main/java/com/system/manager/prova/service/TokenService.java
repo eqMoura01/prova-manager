@@ -1,6 +1,7 @@
 package com.system.manager.prova.service;
 
 import java.security.Key;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.system.manager.prova.repository.TokenRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 
 @Service
 public class TokenService {
@@ -39,6 +41,19 @@ public class TokenService {
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)
                 .compact();
+    }
+
+    public boolean validaToken(String token) throws SignatureException {
+
+        Token tokenEncontrado = findByToken(token.substring(7));
+
+        if (tokenEncontrado.getDtExpiracao().after(new Date())) {
+            tokenEncontrado.setDtExpiracao(new Timestamp(System.currentTimeMillis() + EXPIRATION_TIME));
+
+            return true;
+        } else {
+            throw new SignatureException("Token expirado");
+        }
     }
 
 }
